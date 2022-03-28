@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate {
     
 // outlets
     @IBOutlet weak var bitcoinLabel: UILabel!
@@ -25,6 +25,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // Do any additional setup after loading the view.
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
+        coinManager.delegate = self
     }
 
     // stubs from UIPickerViewDataSource
@@ -49,6 +50,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // this is what happen if I select a row in pickerView
         let selectedCoin = coinManager.currencyArray[row]
         coinManager.getCoinPrice(for: selectedCoin)
+    }
+    
+    // coinManagerDelegate stubs:
+    func didUpdateCoinInfo(manager: CoinManager, info: CoinInfo) {
+        // test the callback
+        print("coin rate: \(info.rate)")
     }
 
 }
