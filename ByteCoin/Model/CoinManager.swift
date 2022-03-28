@@ -14,7 +14,7 @@ struct CoinManager {
     let apiKey = "0D68574D-46EE-4216-A6EB-806A274ABB83"
     
     let currencyArray = ["AUD", "BRL","CAD","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
-    // TODO CNY is not recognized
+    //  CNY is not recognized
 
     func getCoinPrice(for currency: String){
         // get currency code and process to get data from the API.
@@ -42,11 +42,11 @@ struct CoinManager {
         
         if let safeData = data {
             // parse the incoming safeData from its JSON format
-            parseJSON(coinData: safeData)
+            let coinInfo = parseJSON(coinData: safeData)
         }
     }
     
-    func parseJSON(coinData: Data) {
+    func parseJSON(coinData: Data) -> CoinInfo? {
         // this will parse the incoming JSON data from the coinAPI server
         let decoder = JSONDecoder()
         
@@ -56,9 +56,14 @@ struct CoinManager {
             // for test purposes just print it for now
             print("the currency code: \(decodedData.asset_id_quote)")
             print("exchange rate: \(decodedData.rate)")
+            let quote = decodedData.asset_id_quote
+            let rate = String(format: "%.2f", decodedData.rate)
+            let coinInfo = CoinInfo(currency: quote, rate: rate)
+            return coinInfo
         } catch {
             // if error caught for now just print it
             print(error)
+            return nil
         }
     }
 }
