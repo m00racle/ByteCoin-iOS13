@@ -17,7 +17,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     // connect to coinManager struct:
-    let coinManager = CoinManager()
+    var coinManager = CoinManager()
     
     
     override func viewDidLoad() {
