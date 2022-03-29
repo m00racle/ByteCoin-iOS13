@@ -62,9 +62,7 @@ struct CoinManager {
         do {
             // try to decode the JSON formatted data
             let decodedData = try decoder.decode(CoinData.self, from: coinData)
-            // for test purposes just print it for now
-            print("the currency code: \(decodedData.asset_id_quote)")
-            print("exchange rate: \(decodedData.rate)")
+            // build the coinInfo type object.
             let quote = decodedData.asset_id_quote
             let rate = String(format: "%.2f", decodedData.rate)
             let coinInfo = CoinInfo(currency: quote, rate: rate)

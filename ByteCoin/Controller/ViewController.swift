@@ -54,8 +54,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     // coinManagerDelegate stubs:
     func didUpdateCoinInfo(manager: CoinManager, info: CoinInfo) {
-        // test the callback
-        print("coin rate: \(info.rate)")
+        
+        // USING queue
+        DispatchQueue.main.async {
+            self.currencyLabel.text = info.currency
+            self.bitcoinLabel.text = info.rate
+        }
     }
 
 }
