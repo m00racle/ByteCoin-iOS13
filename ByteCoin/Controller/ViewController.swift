@@ -66,6 +66,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func didFailedWithError(error: Error) {
         // process the error
         print(error)
+        DispatchQueue.main.async {
+            // put back the process to main thread and then put it into bitcoinLabel
+            self.bitcoinLabel.text = "Not Available!"
+            self.currencyLabel.text = ""
+        }
     }
 
 }
