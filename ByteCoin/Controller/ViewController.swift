@@ -26,6 +26,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
         coinManager.delegate = self
+        coinManager.getCoinPrice(for: coinManager.currencyArray[0])
     }
 
     // stubs from UIPickerViewDataSource
