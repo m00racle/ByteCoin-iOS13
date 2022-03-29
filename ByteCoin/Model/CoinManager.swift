@@ -10,6 +10,7 @@ import Foundation
 
 protocol CoinManagerDelegate {
     func didUpdateCoinInfo(manager: CoinManager, info: CoinInfo)
+    func didFailedWithError(error: Error)
 }
 
 struct CoinManager {
@@ -17,7 +18,7 @@ struct CoinManager {
     let baseURL = "https://rest.coinapi.io/v1/exchangerate/BTC"
     let apiKey = "0D68574D-46EE-4216-A6EB-806A274ABB83"
     
-    let currencyArray = ["AUD", "BRL","CAD","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
+    let currencyArray = ["AUD", "BRL","CAD", "CNY", "EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
     //  CNY is not recognized
     
     var delegate: CoinManagerDelegate?
@@ -42,7 +43,8 @@ struct CoinManager {
     
     func handle(data: Data?, response: URLResponse?, error: Error?) {
         if error != nil {
-            print(error!)
+            // if failed with error
+            delegate?.didFailedWithError(error: error!)
             return
         }
         
@@ -68,8 +70,8 @@ struct CoinManager {
             let coinInfo = CoinInfo(currency: quote, rate: rate)
             return coinInfo
         } catch {
-            // if error caught for now just print it
-            print(error)
+            // if error call func didFailedWithError
+            delegate?.didFailedWithError(error: error)
             return nil
         }
     }

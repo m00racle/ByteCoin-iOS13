@@ -62,6 +62,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             self.bitcoinLabel.text = info.rate
         }
     }
+    
+    func didFailedWithError(error: Error) {
+        // process the error
+        print(error)
+    }
 
 }
 
