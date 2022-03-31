@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate {
     
 // outlets
     @IBOutlet weak var bitcoinLabel: UILabel!
@@ -17,7 +17,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     // connect to coinManager struct:
-    let coinManager = CoinManager()
+    var coinManager = CoinManager()
     
     
     override func viewDidLoad() {
@@ -25,6 +25,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // Do any additional setup after loading the view.
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
+        coinManager.delegate = self
+        coinManager.getCoinPrice(for: coinManager.currencyArray[0])
     }
 
     // stubs from UIPickerViewDataSource
@@ -49,6 +51,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // this is what happen if I select a row in pickerView
         let selectedCoin = coinManager.currencyArray[row]
         coinManager.getCoinPrice(for: selectedCoin)
+    }
+    
+    // coinManagerDelegate stubs:
+    func didUpdateCoinInfo(manager: CoinManager, info: CoinInfo) {
+        
+        // USING queue
+        DispatchQueue.main.async {
+            self.currencyLabel.text = info.currency
+            self.bitcoinLabel.text = info.rate
+        }
+    }
+    
+    func didFailedWithError(error: Error) {
+        // process the error
+        print(error)
+        DispatchQueue.main.async {
+            // put back the process to main thread and then put it into bitcoinLabel
+            self.bitcoinLabel.text = "Not Available!"
+            self.currencyLabel.text = ""
+        }
     }
 
 }
