@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController {
     
 // outlets
     @IBOutlet weak var bitcoinLabel: UILabel!
@@ -28,7 +28,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         coinManager.delegate = self
         coinManager.getCoinPrice(for: coinManager.currencyArray[0])
     }
+    
+}
 
+// MARK: UIPickerView stubs
+extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     // stubs from UIPickerViewDataSource
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         // number of columns in the picker
@@ -52,7 +56,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let selectedCoin = coinManager.currencyArray[row]
         coinManager.getCoinPrice(for: selectedCoin)
     }
-    
 }
 
 // MARK: CoinManagerDelegates stub
