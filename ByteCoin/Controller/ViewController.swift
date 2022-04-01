@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
 // outlets
     @IBOutlet weak var bitcoinLabel: UILabel!
@@ -53,6 +53,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         coinManager.getCoinPrice(for: selectedCoin)
     }
     
+}
+
+// MARK: CoinManagerDelegates stub
+extension ViewController: CoinManagerDelegate {
     // coinManagerDelegate stubs:
     func didUpdateCoinInfo(manager: CoinManager, info: CoinInfo) {
         
@@ -72,6 +76,4 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             self.currencyLabel.text = ""
         }
     }
-
 }
-
